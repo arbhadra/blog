@@ -1,0 +1,143 @@
+/* ---------- Design tokens (Distill-inspired) ---------- */
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --text-soft: #6b6b6b;
+  --rule: #ececec;
+  --link: #2a6592;
+  --link-hover: #1a4666;
+  --accent: #3d5a80;
+  --code-bg: #f6f8fa;
+  --max-width: 720px;
+  --serif: 'Source Serif 4', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+
+/* ---------- Header ---------- */
+.site-header { border-bottom: 1px solid var(--rule); background: var(--bg); }
+.header-inner {
+  max-width: var(--max-width); margin: 0 auto; padding: 1.1rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.75rem;
+}
+.site-brand {
+  font-family: var(--sans); font-weight: 600; font-size: 1.05rem;
+  color: var(--text); letter-spacing: -0.01em;
+}
+.site-nav a { font-family: var(--sans); font-size: 0.9rem; color: var(--text-soft); margin-left: 1.25rem; }
+.site-nav a:hover { color: var(--accent); text-decoration: none; }
+
+/* ---------- Layout ---------- */
+.site-content { max-width: var(--max-width); margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
+
+/* ---------- Home ---------- */
+.home-intro { margin-bottom: 2rem; }
+.home-title { font-family: var(--sans); font-weight: 600; font-size: 2.2rem; letter-spacing: -0.02em; margin: 0 0 0.3rem; }
+.home-tagline { color: var(--text-soft); font-style: italic; margin: 0 0 1rem; }
+.home-bio { color: var(--text); }
+
+/* ---------- Tag filter bar ---------- */
+.tag-filter {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--rule); margin-bottom: 2rem;
+}
+.filter-btn {
+  font-family: var(--sans); font-size: 0.82rem; padding: 0.35rem 0.8rem;
+  border: 1px solid var(--rule); border-radius: 999px; background: #fff;
+  color: var(--text-soft); cursor: pointer; transition: all 0.15s ease;
+}
+.filter-btn:hover { border-color: var(--pill, var(--accent)); color: var(--text); }
+.filter-btn.active { background: var(--pill, var(--accent)); color: #fff; border-color: transparent; }
+
+/* ---------- Post cards ---------- */
+.post-list { display: flex; flex-direction: column; gap: 2.25rem; }
+.post-card { padding-bottom: 2.25rem; border-bottom: 1px solid var(--rule); }
+.post-card:last-child { border-bottom: none; }
+.card-title { font-family: var(--sans); font-weight: 600; font-size: 1.5rem; line-height: 1.25; margin: 0 0 0.5rem; }
+.card-title a { color: var(--text); }
+.card-title a:hover { color: var(--accent); text-decoration: none; }
+.card-meta, .post-meta { font-family: var(--sans); font-size: 0.82rem; color: var(--text-soft); margin: 0.4rem 0 0.75rem; }
+.dot { margin: 0 0.4rem; }
+.card-excerpt { color: #333; margin: 0.5rem 0 0.75rem; }
+.card-readmore { font-family: var(--sans); font-size: 0.9rem; font-weight: 500; }
+
+/* ---------- Tag pills ---------- */
+.tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.5rem 0; }
+.tag-pill {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em;
+  color: #fff; padding: 0.2rem 0.6rem; border-radius: 999px; text-transform: uppercase;
+}
+.tag-pill:hover { color: #fff; text-decoration: none; opacity: 0.88; }
+.tag-unknown { background: #999; }
+
+/* ---------- Post page ---------- */
+.post-header { margin-bottom: 2rem; }
+.post-title { font-family: var(--sans); font-weight: 600; font-size: 2.2rem; line-height: 1.2; letter-spacing: -0.02em; margin: 0.5rem 0; }
+.post-subtitle { color: var(--text-soft); font-style: italic; font-size: 1.1rem; }
+.post-content { font-size: 1.05rem; }
+.post-content h2 { font-family: var(--sans); font-weight: 600; margin-top: 2.2rem; font-size: 1.5rem; }
+.post-content h3 { font-family: var(--sans); font-weight: 600; font-size: 1.2rem; }
+.post-content img { max-width: 100%; border-radius: 6px; }
+.post-content blockquote {
+  border-left: 3px solid var(--accent); margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.2rem; color: var(--text-soft); font-style: italic;
+}
+.post-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.back-link { font-family: var(--sans); font-size: 0.9rem; }
+
+/* ---------- Code ---------- */
+pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88rem; }
+code { background: var(--code-bg); padding: 0.15em 0.4em; border-radius: 4px; }
+pre {
+  background: var(--code-bg); padding: 1rem 1.1rem; border-radius: 8px;
+  overflow-x: auto; border: 1px solid var(--rule); line-height: 1.5;
+}
+pre code { background: none; padding: 0; }
+.highlight { background: var(--code-bg); border-radius: 8px; }
+
+/* ---------- Search page ---------- */
+.page { max-width: var(--max-width); }
+.page h1 { font-family: var(--sans); font-weight: 600; }
+.page h2 { font-family: var(--sans); font-weight: 600; font-size: 1.3rem; }
+.search-box {
+  width: 100%; padding: 0.7rem 0.9rem; font-size: 1rem; font-family: var(--sans);
+  border: 1px solid var(--rule); border-radius: 8px; margin: 1rem 0;
+}
+.search-box:focus { outline: none; border-color: var(--accent); }
+.search-results { list-style: none; padding: 0; }
+.search-results li { padding: 0.6rem 0; border-bottom: 1px solid var(--rule); }
+.search-results a { font-family: var(--sans); font-weight: 500; }
+.search-date { font-family: var(--sans); font-size: 0.8rem; color: var(--text-soft); margin-left: 0.6rem; }
+.no-results { color: var(--text-soft); font-style: italic; }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--rule); margin-top: 3rem; }
+.footer-inner { max-width: var(--max-width); margin: 0 auto; padding: 1.5rem 1.25rem 2.5rem; }
+.footer-links a { font-family: var(--sans); font-size: 0.88rem; color: var(--text-soft); margin-right: 1rem; }
+.footer-links a:hover { color: var(--accent); text-decoration: none; }
+.footer-note { font-family: var(--sans); font-size: 0.8rem; color: var(--text-soft); margin-top: 0.75rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  body { font-size: 17px; }
+  .home-title, .post-title { font-size: 1.8rem; }
+  .card-title { font-size: 1.3rem; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .site-nav a { margin-left: 0; margin-right: 1rem; }
+}
