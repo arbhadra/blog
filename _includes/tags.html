@@ -1,0 +1,15 @@
+{% if include.tags %}
+<div class="tag-list">
+  {% for tag_key in include.tags %}
+    {% assign t = site.data.tags[tag_key] %}
+    {% if t %}
+      <a class="tag-pill" href="{{ '/#tag-' | append: tag_key | relative_url }}"
+         style="background-color: {{ t.color }};">
+        {{ t.name }}
+      </a>
+    {% else %}
+      <span class="tag-pill tag-unknown">{{ tag_key }}</span>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endif %}
