@@ -22,6 +22,6 @@ You can also drop images inside the text:
 Or with a caption using HTML:
 
 <figure>
-  <img src="/assets/images/chart.png" alt="Results chart">
+  <img src="/assets/images/chart.jpg" alt="Results chart">
   <figcaption>Figure 1: My results.</figcaption>
 </figure>
