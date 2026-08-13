@@ -1,0 +1,26 @@
+# Define each tag once. "color" is used for the tag pill background.
+# The text color auto-contrasts in CSS. Add as many as you like.
+
+achievement:
+  name: "Achievement"
+  color: "#e07a5f"      # warm terracotta
+
+writing:
+  name: "Writing"
+  color: "#81b29a"      # sage green
+
+tutorial:
+  name: "Tutorial"
+  color: "#3d5a80"      # slate blue
+
+research:
+  name: "Research"
+  color: "#8e7dbe"      # muted purple
+
+notes:
+  name: "Notes"
+  color: "#f2cc8f"      # sand yellow
+
+talk:
+  name: "Talk"
+  color: "#bc4749"      # deep red
