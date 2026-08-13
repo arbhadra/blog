@@ -1,0 +1,38 @@
+---
+layout: default
+title: Page Not Found
+permalink: /404.html
+---
+<div class="page not-found">
+  <h1>404</h1>
+  <p class="nf-message">This page wandered off.</p>
+  <p class="nf-sub">
+    The page you're looking for doesn't exist, was moved, or never did.
+  </p>
+  <p class="nf-actions">
+    <a href="{{ '/' | relative_url }}">← Back to home</a>
+    <span class="dot">·</span>
+    <a href="{{ '/search.html' | relative_url }}">Search posts</a>
+  </p>
+</div>
+
+<style>
+  .not-found { text-align: center; padding: 3rem 0 4rem; }
+  .not-found h1 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 5rem;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.03em;
+  }
+  .nf-message {
+    font-family: var(--sans);
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+  .nf-sub { color: var(--text-soft); font-style: italic; }
+  .nf-actions { font-family: var(--sans); font-size: 0.95rem; margin-top: 1.5rem; }
+  .nf-actions a { font-weight: 500; }
+</style>
