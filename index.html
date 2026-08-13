@@ -1,0 +1,80 @@
+---
+layout: default
+---
+<section class="home-intro">
+  <h1 class="home-title">{{ site.title }}</h1>
+  <p class="home-tagline">{{ site.tagline }}</p>
+  <p class="home-bio">
+    <!-- TEMPLATE TEXT — edit this later -->
+    I write about my work, share tutorials, and post occasional notes.
+    This is placeholder text for a short bio; replace it with a sentence
+    or two about who you are and what readers can expect here.
+  </p>
+</section>
+
+<!-- Tag filter bar -->
+<section class="tag-filter">
+  <button class="filter-btn active" data-tag="all">All</button>
+  {% for tag in site.data.tags %}
+    <button class="filter-btn" data-tag="{{ tag[0] }}"
+            style="--pill: {{ tag[1].color }};">
+      {{ tag[1].name }}
+    </button>
+  {% endfor %}
+</section>
+
+<!-- Post list -->
+<section class="post-list">
+  {% for post in site.posts %}
+    <article class="post-card"
+             data-tags="{% for t in post.tags %}{{ t }} {% endfor %}">
+      <h2 class="card-title">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </h2>
+
+      {% include tags.html tags=post.tags %}
+
+      <div class="card-meta">
+        <time datetime="{{ post.date | date_to_xmlschema }}">
+          {{ post.date | date: "%B %-d, %Y" }}
+        </time>
+        <span class="dot">·</span>
+        {% assign words = post.content | number_of_words %}
+        {% assign wpm = site.reading_speed | default: 200 %}
+        {% assign minutes = words | divided_by: wpm | plus: 1 %}
+        <span>{{ minutes }} min read</span>
+      </div>
+
+      <p class="card-excerpt">
+        {{ post.excerpt | strip_html | truncatewords: 40 }}
+      </p>
+      <a class="card-readmore" href="{{ post.url | relative_url }}">Read more →</a>
+    </article>
+  {% endfor %}
+</section>
+
+<script>
+  // Simple client-side tag filtering
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.post-card');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tag = btn.dataset.tag;
+      cards.forEach(card => {
+        const tags = card.dataset.tags.split(' ');
+        card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+      });
+    });
+  });
+
+  // Support deep-linking from tag pills, e.g. /#tag-tutorial
+  window.addEventListener('load', () => {
+    if (location.hash.startsWith('#tag-')) {
+      const tag = location.hash.replace('#tag-', '');
+      const btn = document.querySelector(`.filter-btn[data-tag="${tag}"]`);
+      if (btn) btn.click();
+    }
+  });
+</script>
