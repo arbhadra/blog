@@ -1,7 +1,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  {% include catalog-entry.html %}
+  {% if entry %}
+    {% comment %} Catalog posts: metadata comes from _data/catalog.yml {% endcomment %}
+    <title>{{ entry.title | strip_html }} · {{ site.title }}</title>
+    <meta name="description" content="{{ entry.summary | default: entry.subtitle | strip_html | strip_newlines | escape }}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta property="og:title" content="{{ entry.title | strip_html | escape }}">
+    <meta property="og:description" content="{{ entry.summary | default: entry.subtitle | strip_html | strip_newlines | escape }}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    {% assign og_img = entry.hero_image | default: entry.thumbnail %}
+    {% if og_img %}
+    {% capture og_src %}{% include entry-asset.html src=og_img slug=entry.slug %}{% endcapture %}
+    <meta property="og:image" content="{% unless og_src contains '://' %}{{ site.url }}{% endunless %}{{ og_src | strip }}">
+    <meta name="twitter:card" content="summary_large_image">
+    {% endif %}
+    <meta property="article:published_time" content="{{ entry.date | date_to_xmlschema }}">
+    {% if entry.status == "draft" %}<meta name="robots" content="noindex">{% endif %}
+  {% else %}
+    {% seo %}
+  {% endif %}
 
   <!-- Distill fonts: Zilla Slab (headings/body) + Inter (UI labels) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,6 +30,5 @@
   <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-  {% seo %}
-  {% feed_meta %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 </head>

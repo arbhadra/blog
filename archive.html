@@ -1,0 +1,26 @@
+---
+layout: default
+title: Archive
+permalink: /archive/
+---
+{% include published-posts.html %}
+<div class="site-content page">
+  <h1>Archive</h1>
+  <p class="archive-sub">{{ published.size }} post{% if published.size != 1 %}s{% endif %}, newest first.</p>
+
+  {% assign by_year = published | group_by_exp: "e", "e.date | date: '%Y'" %}
+  {% for year in by_year %}
+    <section class="archive-year">
+      <h2>{{ year.name }}</h2>
+      <ul class="archive-list">
+        {% for e in year.items %}
+          <li>
+            <time datetime="{{ e.date | date_to_xmlschema }}">{{ e.date | date: "%b %-d" }}</time>
+            <a href="{{ '/posts/' | append: e.slug | append: '/' | relative_url }}">{{ e.title }}</a>
+            {% include tags.html tags=e.tags %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+</div>

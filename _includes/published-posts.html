@@ -1,0 +1,4 @@
+{%- comment -%}
+  Sets `published` = catalog entries that are not drafts, newest first.
+{%- endcomment -%}
+{%- assign published = site.data.catalog | where_exp: "e", "e.status != 'draft'" | sort: "date" | reverse -%}

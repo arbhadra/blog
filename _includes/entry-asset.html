@@ -1,0 +1,13 @@
+{%- comment -%}
+  Resolves an image path from the catalog into a URL.
+  Params: src, slug.
+    "thumb.jpg"               -> /blog/posts/<slug>/thumb.jpg
+    "/assets/images/x.png"    -> /blog/assets/images/x.png
+    "https://…"               -> unchanged
+{%- endcomment -%}
+{%- assign _src = include.src | strip -%}
+{%- assign _c0 = _src | slice: 0, 1 -%}
+{%- if _src contains "://" -%}{{ _src }}
+{%- elsif _c0 == "/" -%}{{ _src | relative_url }}
+{%- else -%}{{ "/posts/" | append: include.slug | append: "/" | append: _src | relative_url }}
+{%- endif -%}

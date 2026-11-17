@@ -1,0 +1,12 @@
+{%- comment -%}
+  Looks up the catalog entry for the current page.
+  A page at posts/<slug>/index.md maps to the catalog item whose slug == <slug>.
+  Sets: entry (catalog hash or nil), entry_slug.
+{%- endcomment -%}
+{%- assign entry = nil -%}
+{%- assign entry_slug = nil -%}
+{%- assign _parts = page.path | split: "/" -%}
+{%- if _parts[0] == "posts" and _parts.size > 2 -%}
+  {%- assign entry_slug = _parts[1] -%}
+  {%- assign entry = site.data.catalog | where: "slug", entry_slug | first -%}
+{%- endif -%}

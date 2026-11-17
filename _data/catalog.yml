@@ -1,0 +1,41 @@
+# =====================================================================
+#  POST CATALOG — the single source of truth for every blog post.
+# =====================================================================
+#
+#  To publish a post:
+#    1. Upload a folder  posts/<slug>/  containing  index.md  (+ any images).
+#    2. Add an entry below whose  slug  matches that folder name exactly.
+#
+#  The homepage, archive, search, RSS feed and prev/next links are all
+#  built from this list. A post folder without an entry here is still
+#  reachable by URL but is not listed anywhere.
+#
+#  Fields
+#  ------
+#  slug         (required) YYYY-MM-DD-short-title, same as the folder name
+#  title        (required)
+#  date         (required) YYYY-MM-DD
+#  tags         (required) list of keys from _data/tags.yml
+#  summary      (required) 1–2 sentences shown on cards, search and RSS
+#  subtitle     optional one-line deck under the title
+#  thumbnail    optional card image. A bare filename is looked up inside the
+#               post's folder; start with / for a site path (/assets/...)
+#  hero_image   optional large image at the top of the post (GIF works)
+#  hero_caption optional caption for hero_image
+#  featured     optional true → pinned in the "Featured" slot on the homepage
+#  status       optional published (default) | draft (built but unlisted)
+#
+#  Order does not matter; the site sorts by date. Newest-first is tidiest.
+# =====================================================================
+
+- slug: 2026-10-01-intro
+  title: "Welcome — Notes on Ideas Worth Writing Down"
+  subtitle: "An introduction to this blog, how it's built, and what you'll find here."
+  date: 2026-10-01
+  tags: [writing, notes]
+  summary: >-
+    The first entry in a long-running collection of notes, tutorials and
+    half-formed ideas — why this blog exists, how it's organised, and a
+    quick tour of what it can render.
+  featured: true
+  status: published

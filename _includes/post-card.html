@@ -1,0 +1,26 @@
+{%- comment -%} Renders one catalog entry as a card. Param: e, featured (bool). {%- endcomment -%}
+{%- assign e = include.e -%}
+{%- assign e_url = "/posts/" | append: e.slug | append: "/" | relative_url -%}
+{%- assign e_path = "posts/" | append: e.slug | append: "/index.md" -%}
+{%- assign e_page = site.pages | where: "path", e_path | first -%}
+{%- assign e_words = e_page.content | strip_html | number_of_words -%}
+{%- assign e_minutes = e_words | divided_by: site.reading_speed | plus: 1 -%}
+<article class="post-card{% if include.featured %} post-card--featured{% endif %}" data-tags="{{ e.tags | join: ' ' }}">
+  {% if e.thumbnail %}
+    <a class="card-thumb" href="{{ e_url }}" tabindex="-1" aria-hidden="true">
+      <img src="{% include entry-asset.html src=e.thumbnail slug=e.slug %}" alt="" loading="lazy">
+    </a>
+  {% endif %}
+  <div class="card-body">
+    {% if include.featured %}<span class="card-kicker">Featured</span>{% endif %}
+    <h2 class="card-title"><a href="{{ e_url }}">{{ e.title }}</a></h2>
+    {% include tags.html tags=e.tags %}
+    <div class="card-meta">
+      <time datetime="{{ e.date | date_to_xmlschema }}">{{ e.date | date: "%B %-d, %Y" }}</time>
+      <span class="dot">·</span>
+      <span>{{ e_minutes }} min read</span>
+    </div>
+    <p class="card-excerpt">{{ e.summary | default: e.subtitle | strip_html }}</p>
+    <a class="card-readmore" href="{{ e_url }}">Read more →</a>
+  </div>
+</article>

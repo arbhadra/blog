@@ -26,11 +26,13 @@ title: Search
       .filter(p =>
         p.title.toLowerCase().includes(q) ||
         p.content.toLowerCase().includes(q) ||
-        p.tags.toLowerCase().includes(q))
+        p.tags.toLowerCase().includes(q) ||
+        (p.summary || "").toLowerCase().includes(q))
       .forEach(p => {
         const li = document.createElement('li');
         li.innerHTML = `<a href="${p.url}">${p.title}</a>
-                        <span class="search-date">${p.date}</span>`;
+                        <span class="search-date">${p.date}</span>
+                        <p class="search-summary">${p.summary || ""}</p>`;
         results.appendChild(li);
       });
     if (!results.children.length) {
