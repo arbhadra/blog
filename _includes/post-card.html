@@ -5,7 +5,7 @@
 {%- assign e_page = site.pages | where: "path", e_path | first -%}
 {%- assign e_words = e_page.content | strip_html | number_of_words -%}
 {%- assign e_minutes = e_words | divided_by: site.reading_speed | plus: 1 -%}
-<article class="post-card{% if include.featured %} post-card--featured{% endif %}" data-tags="{{ e.tags | join: ' ' }}">
+<article class="post-card{% if include.featured %} post-card--featured{% endif %}" data-tags="{{ e.tags | join: ' ' }}"{% if include.dup %} data-featured="true"{% endif %}>
   {% if e.thumbnail %}
     <a class="card-thumb" href="{{ e_url }}" tabindex="-1" aria-hidden="true">
       <img src="{% include entry-asset.html src=e.thumbnail slug=e.slug %}" alt="" loading="lazy">

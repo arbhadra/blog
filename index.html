@@ -30,7 +30,7 @@ layout: default
 
 <div class="site-content">
   {% comment %} Featured slot appears once there are enough posts for it to stand out. {% endcomment %}
-  {% if featured and published.size > 3 %}
+  {% if featured and published.size > 1 %}
     <section class="featured" aria-label="Featured post">
       {% include post-card.html e=featured featured=true %}
     </section>
@@ -51,7 +51,7 @@ layout: default
 
   <section class="post-list">
     {% for e in published %}
-      {% include post-card.html e=e %}
+      {% include post-card.html e=e dup=e.featured %}
     {% endfor %}
     <p class="empty-state" hidden>No posts with this tag yet.</p>
   </section>
@@ -69,7 +69,8 @@ layout: default
       buttons.forEach(b => b.classList.toggle('active', b.dataset.tag === tag));
       cards.forEach(card => {
         const ok = tag === 'all' || card.dataset.tags.split(' ').includes(tag);
-        card.hidden = !ok;
+        // the featured post already sits in its own slot on the "All" view
+        card.hidden = !ok || (tag === 'all' && featured && card.dataset.featured === 'true');
         if (ok) shown++;
       });
       if (empty) empty.hidden = shown > 0;

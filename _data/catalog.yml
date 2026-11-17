@@ -28,6 +28,19 @@
 #  Order does not matter; the site sorts by date. Newest-first is tidiest.
 # =====================================================================
 
+- slug: 2026-11-15-fem2d-browser-solver
+  title: "FEM-2D: A Browser-Based 2D Finite Element Solver"
+  subtitle: "Plane-stress FEM from scratch in NumPy, verified against beam theory and run in the browser with PyScript."
+  date: 2026-11-15
+  tags: [research, tutorial]
+  summary: >-
+    A two-dimensional plane-stress finite element solver written from scratch
+    in Python and NumPy that runs in the browser, with CST and Q4 elements
+    verified against beam theory to within 1%.
+  thumbnail: fig1-von-mises.png
+  featured: true
+  status: published
+
 - slug: 2026-10-01-intro
   title: "Welcome — Notes on Ideas Worth Writing Down"
   subtitle: "An introduction to this blog, how it's built, and what you'll find here."
@@ -37,5 +50,4 @@
     The first entry in a long-running collection of notes, tutorials and
     half-formed ideas — why this blog exists, how it's organised, and a
     quick tour of what it can render.
-  featured: true
   status: published
