@@ -28,6 +28,28 @@
 #  Order does not matter; the site sorts by date. Newest-first is tidiest.
 # =====================================================================
 
+- slug: 2026-11-17-ielts-academic-result
+  title: "IELTS Academic: Overall Band 8.0 (CEFR C1)"
+  subtitle: "Listening 8.0, Reading 9.0, Writing 7.5, Speaking 6.5, compared with official 2024–25 IELTS statistics."
+  date: 2026-11-17
+  tags: [achievement, notes]
+  summary: >-
+    An overall band of 8.0 in IELTS Academic, with a maximum 9.0 in Reading,
+    two bands above the Bangladesh Academic mean. Includes the test format,
+    the scoring, and a skill-by-skill comparison with official data.
+  status: published
+
+- slug: 2026-11-17-gre-general-test-result
+  title: "GRE General Test: 321 (Q167, V154, AW3.5)"
+  subtitle: "What the GRE measures, and how this result compares with ETS reference data for all test takers and for engineering applicants."
+  date: 2026-11-17
+  tags: [achievement, notes]
+  summary: >-
+    A GRE score of 321, with Quantitative Reasoning 167 (78th percentile),
+    about one standard deviation above the overall mean and 6 points above
+    the mean of prospective engineering students.
+  status: published
+
 - slug: 2026-11-15-fem2d-browser-solver
   title: "FEM-2D: A Browser-Based 2D Finite Element Solver"
   subtitle: "Plane-stress FEM from scratch in NumPy, verified against beam theory and run in the browser with PyScript."
