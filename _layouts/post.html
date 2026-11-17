@@ -1,40 +1,79 @@
 ---
 layout: default
 ---
-<article class="post">
-  {% if page.hero_image %}
-  <figure class="post-hero">
-    <img src="{{ page.hero_image | relative_url }}" alt="{{ page.title }}">
-    {% if page.hero_caption %}<figcaption>{{ page.hero_caption }}</figcaption>{% endif %}
-  </figure>
-  {% endif %}
+{% include catalog-entry.html %}
+{% assign p_title    = entry.title    | default: page.title %}
+{% assign p_subtitle = entry.subtitle | default: page.subtitle %}
+{% assign p_date     = entry.date     | default: page.date %}
+{% assign p_tags     = entry.tags     | default: page.tags %}
+{% assign p_hero     = entry.hero_image | default: page.hero_image %}
+{% assign p_caption  = entry.hero_caption | default: page.hero_caption %}
 
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
+<div class="post-wrap">
+  <article class="post">
+    {% if entry.status == "draft" %}
+      <p class="draft-banner">Draft — this post is not listed on the site yet.</p>
+    {% endif %}
 
-    {% include tags.html tags=page.tags %}
+    {% if p_hero %}
+    <figure class="post-hero">
+      <img src="{% include entry-asset.html src=p_hero slug=entry_slug %}" alt="{{ p_caption | default: p_title | escape }}">
+      {% if p_caption %}<figcaption>{{ p_caption }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
 
-    <div class="post-meta">
-      <time datetime="{{ page.date | date_to_xmlschema }}">
-        {{ page.date | date: "%B %-d, %Y" }}
-      </time>
-      <span class="dot">·</span>
-      {% assign words = content | number_of_words %}
-      {% assign wpm = site.reading_speed | default: 200 %}
-      {% assign minutes = words | divided_by: wpm | plus: 1 %}
-      <span class="read-time">{{ minutes }} min read</span>
+    <header class="post-header">
+      <h1 class="post-title">{{ p_title }}</h1>
+
+      {% include tags.html tags=p_tags %}
+
+      <div class="post-meta">
+        {% if p_date %}
+        <time datetime="{{ p_date | date_to_xmlschema }}">{{ p_date | date: "%B %-d, %Y" }}</time>
+        <span class="dot">·</span>
+        {% endif %}
+        {% assign words = content | number_of_words %}
+        {% assign wpm = site.reading_speed | default: 200 %}
+        {% assign minutes = words | divided_by: wpm | plus: 1 %}
+        <span class="read-time">{{ minutes }} min read</span>
+      </div>
+
+      {% if p_subtitle %}
+        <p class="post-subtitle">{{ p_subtitle }}</p>
+      {% endif %}
+    </header>
+
+    <div class="post-content">
+      {{ content }}
     </div>
 
-    {% if page.subtitle %}
-      <p class="post-subtitle">{{ page.subtitle }}</p>
+    {% if entry %}
+      {% include published-posts.html %}
+      {% assign idx = -1 %}
+      {% for e in published %}{% if e.slug == entry.slug %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
+      {% assign newer = nil %}{% assign older = nil %}
+      {% if idx > 0 %}{% assign ni = idx | minus: 1 %}{% assign newer = published[ni] %}{% endif %}
+      {% if idx >= 0 %}{% assign oi = idx | plus: 1 %}{% assign older = published[oi] %}{% endif %}
+      {% if newer or older %}
+      <nav class="post-nav" aria-label="More posts">
+        {% if older %}
+          <a class="post-nav-link prev" href="{{ '/posts/' | append: older.slug | append: '/' | relative_url }}">
+            <span class="post-nav-label">← Older</span>
+            <span class="post-nav-title">{{ older.title }}</span>
+          </a>
+        {% else %}<span></span>{% endif %}
+        {% if newer %}
+          <a class="post-nav-link next" href="{{ '/posts/' | append: newer.slug | append: '/' | relative_url }}">
+            <span class="post-nav-label">Newer →</span>
+            <span class="post-nav-title">{{ newer.title }}</span>
+          </a>
+        {% endif %}
+      </nav>
+      {% endif %}
     {% endif %}
-  </header>
 
-  <div class="post-content">
-    {{ content }}
-  </div>
-
-  <footer class="post-footer">
-    <a class="back-link" href="{{ '/' | relative_url }}">← Back to all posts</a>
-  </footer>
-</article>
+    <footer class="post-footer">
+      <a class="back-link" href="{{ '/' | relative_url }}">← Back to all posts</a>
+    </footer>
+  </article>
+</div>

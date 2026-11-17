@@ -6,7 +6,8 @@
   <main>{{ content }}</main>
   {% include footer.html %}
 
-  <!-- MathJax -->
+  <!-- MathJax (pinned version; the old polyfill.io script was removed —
+       that domain was hijacked in 2024 and served malware) -->
   <script>
     window.MathJax = {
       tex: {
@@ -16,8 +17,7 @@
       svg: { fontCache: 'global' }
     };
   </script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
 </body>
 </html>

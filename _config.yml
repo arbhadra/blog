@@ -23,13 +23,24 @@ kramdown:
   syntax_highlighter: rouge
 
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-redirect-from   # keeps old /YYYY/MM/DD/title/ links working
 
 excerpt_separator: "<!--more-->"
 reading_speed: 200
 
+# Every page inside posts/ uses the post layout, so uploaded post files
+# need only an empty front matter block (two lines of ---) at the top.
+defaults:
+  - scope:
+      path: "posts"
+    values:
+      layout: post
+
 exclude:
+  - docs
+  - scripts
+  - AGENTS.md
   - Gemfile
   - Gemfile.lock
   - README.md

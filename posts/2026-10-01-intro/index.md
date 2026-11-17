@@ -1,9 +1,6 @@
 ---
-layout: post
-title: "Welcome — Notes on Ideas Worth Writing Down"
-subtitle: "An introduction to this blog, how it's built, and what you'll find here."
-date: 2026-10-01
-tags: [writing, notes]
+# Metadata (title, date, tags…) lives in _data/catalog.yml
+redirect_from: /2026/10/01/intro/
 ---
 
 Welcome. This is the first entry in what I hope becomes a long-running
@@ -56,3 +53,4 @@ def greet(name: str) -> str:
     return f"Hello, {name} — thanks for reading."
 
 print(greet("friend"))
+```

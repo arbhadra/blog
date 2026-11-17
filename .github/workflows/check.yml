@@ -1,0 +1,37 @@
+name: Check catalog
+
+# Runs on every upload/commit. GitHub Pages still deploys on its own;
+# this job just tells you (red ✗ / green ✓) whether the new post is valid.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml==6.0.2
+      - name: Validate _data/catalog.yml
+        run: python scripts/check_catalog.py
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build site exactly like GitHub Pages
+        run: bundle exec jekyll build --baseurl /blog --trace
+      - name: Every listed post produced a page
+        run: |
+          for slug in $(grep -E '^- slug:' _data/catalog.yml | awk '{print $3}'); do
+            test -f "_site/posts/$slug/index.html" || { echo "missing _site/posts/$slug/index.html"; exit 1; }
+          done
+          echo "All catalog posts built."

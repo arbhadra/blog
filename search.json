@@ -1,14 +1,18 @@
 ---
 layout: null
 ---
+{% include published-posts.html %}
 [
-  {% for post in site.posts %}
+  {% for e in published %}
+  {% assign e_path = "posts/" | append: e.slug | append: "/index.md" %}
+  {% assign e_page = site.pages | where: "path", e_path | first %}
   {
-    "title": {{ post.title | jsonify }},
-    "url": {{ post.url | relative_url | jsonify }},
-    "date": {{ post.date | date: "%B %-d, %Y" | jsonify }},
-    "tags": {{ post.tags | join: " " | jsonify }},
-    "content": {{ post.content | strip_html | strip_newlines | jsonify }}
+    "title": {{ e.title | jsonify }},
+    "url": {{ "/posts/" | append: e.slug | append: "/" | relative_url | jsonify }},
+    "date": {{ e.date | date: "%B %-d, %Y" | jsonify }},
+    "tags": {{ e.tags | join: " " | jsonify }},
+    "summary": {{ e.summary | strip_html | strip_newlines | jsonify }},
+    "content": {{ e_page.content | strip_html | strip_newlines | jsonify }}
   }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 ]

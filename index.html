@@ -13,71 +13,81 @@ layout: default
   </div>
   <div class="hero-band">
     <div class="hero-band-inner">
-      <div class="hero-feature">
+      <a class="hero-feature" href="#tag-tutorial">
         <span class="label">Writing &amp; Tutorials ›</span>
         <p>Notes, tutorials, and sample writing across my areas of interest.</p>
-      </div>
-      <div class="hero-feature">
+      </a>
+      <a class="hero-feature" href="#tag-achievement">
         <span class="label">Achievements ›</span>
         <p>Highlights, milestones, and talks worth sharing.</p>
-      </div>
+      </a>
     </div>
   </div>
 </section>
 
+{% include published-posts.html %}
+{% assign featured = published | where: "featured", true | first %}
+
 <div class="site-content">
-  <section class="tag-filter">
-    <button class="filter-btn active" data-tag="all">All</button>
+  {% comment %} Featured slot appears once there are enough posts for it to stand out. {% endcomment %}
+  {% if featured and published.size > 3 %}
+    <section class="featured" aria-label="Featured post">
+      {% include post-card.html e=featured featured=true %}
+    </section>
+  {% endif %}
+
+  <section class="tag-filter" aria-label="Filter posts by tag">
+    <button class="filter-btn active" data-tag="all">All <span class="count">{{ published.size }}</span></button>
     {% for tag in site.data.tags %}
-      <button class="filter-btn" data-tag="{{ tag[0] }}" style="--pill: {{ tag[1].color }};">
-        {{ tag[1].name }}
-      </button>
+      {% assign n = 0 %}
+      {% for e in published %}{% if e.tags contains tag[0] %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}
+      {% if n > 0 %}
+        <button class="filter-btn" data-tag="{{ tag[0] }}" style="--pill: {{ tag[1].color }};">
+          {{ tag[1].name }} <span class="count">{{ n }}</span>
+        </button>
+      {% endif %}
     {% endfor %}
   </section>
 
   <section class="post-list">
-    {% for post in site.posts %}
-      <article class="post-card" data-tags="{% for t in post.tags %}{{ t }} {% endfor %}">
-        {% if post.thumbnail %}
-          <a class="card-thumb" href="{{ post.url | relative_url }}">
-            <img src="{{ post.thumbnail | relative_url }}" alt="{{ post.title }}">
-          </a>
-        {% endif %}
-        <div class="card-body">
-          <h2 class="card-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-          {% include tags.html tags=post.tags %}
-          <div class="card-meta">
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %-d, %Y" }}</time>
-            <span class="dot">·</span>
-            {% assign words = post.content | number_of_words %}
-            {% assign minutes = words | divided_by: site.reading_speed | plus: 1 %}
-            <span>{{ minutes }} min read</span>
-          </div>
-          <p class="card-excerpt">{{ post.excerpt | strip_html | truncatewords: 32 }}</p>
-          <a class="card-readmore" href="{{ post.url | relative_url }}">Read more →</a>
-        </div>
-      </article>
+    {% for e in published %}
+      {% include post-card.html e=e %}
     {% endfor %}
+    <p class="empty-state" hidden>No posts with this tag yet.</p>
   </section>
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.post-card');
-  buttons.forEach(btn => btn.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const tag = btn.dataset.tag;
-    cards.forEach(card => {
-      const tags = card.dataset.tags.split(' ');
-      card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
-    });
-  }));
-  window.addEventListener('load', () => {
-    if (location.hash.startsWith('#tag-')) {
-      const tag = location.hash.replace('#tag-', '');
-      const btn = document.querySelector(`.filter-btn[data-tag="${tag}"]`);
-      if (btn) btn.click();
+  (function () {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.post-list .post-card');
+    const empty = document.querySelector('.empty-state');
+    const featured = document.querySelector('.featured');
+
+    function apply(tag) {
+      let shown = 0;
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.tag === tag));
+      cards.forEach(card => {
+        const ok = tag === 'all' || card.dataset.tags.split(' ').includes(tag);
+        card.hidden = !ok;
+        if (ok) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+      if (featured) featured.hidden = tag !== 'all';
     }
-  });
+
+    buttons.forEach(btn => btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag;
+      history.replaceState(null, '', tag === 'all' ? location.pathname : '#tag-' + tag);
+      apply(tag);
+    }));
+
+    function fromHash() {
+      const tag = location.hash.startsWith('#tag-') ? location.hash.slice(5) : 'all';
+      apply(tag);
+      if (tag !== 'all') document.querySelector('.tag-filter').scrollIntoView({ behavior: 'smooth' });
+    }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  })();
 </script>

@@ -76,7 +76,8 @@ a:hover { color: var(--link-hover); border-bottom-color: var(--link-hover); }
   max-width: var(--max-width); margin: 0 auto; padding: 1.25rem 1.5rem;
   display: flex; gap: 2.5rem; flex-wrap: wrap;
 }
-.hero-feature { color: rgba(255,255,255,0.9); max-width: 340px; }
+.hero-feature { color: rgba(255,255,255,0.9); max-width: 340px; border: none; }
+a.hero-feature:hover .label { color: var(--accent); }
 .hero-feature .label {
   font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.08em; color: #fff; display: block; margin-bottom: 0.2rem;
@@ -200,6 +201,52 @@ pre code { background: none; padding: 0; }
 .nf-sub { color: var(--text-soft); font-style: italic; }
 .nf-actions { font-family: var(--sans); font-size: 0.9rem; margin-top: 1.5rem; }
 
+/* ===== Post page container (was missing: text ran to the window edge) ===== */
+.post-wrap { max-width: var(--content-width); margin: 0 auto; padding: 3rem 1.5rem; }
+.draft-banner {
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 600;
+  background: #fff4cc; border: 1px solid var(--accent); color: #6b5300;
+  padding: 0.5rem 0.8rem; border-radius: 6px; margin: 0 0 1.5rem;
+}
+.post-content table { border-collapse: collapse; width: 100%; font-size: 0.95rem; margin: 1.5rem 0; display: block; overflow-x: auto; }
+.post-content th, .post-content td { border-bottom: 1px solid var(--rule); padding: 0.45rem 0.7rem; text-align: left; }
+.post-content th { font-family: var(--sans); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-soft); }
+.post-content mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
+
+/* ===== Prev / next ===== */
+.post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 3rem; }
+.post-nav-link {
+  display: block; border: 1px solid var(--rule); border-radius: 8px; padding: 0.9rem 1rem;
+  background: var(--surface); transition: border-color 0.15s ease;
+}
+.post-nav-link:hover { border-color: var(--navy-mid); }
+.post-nav-link.next { text-align: right; grid-column: 2; }
+.post-nav-label { display: block; font-family: var(--sans); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-soft); }
+.post-nav-title { display: block; color: var(--text); font-weight: 600; line-height: 1.35; margin-top: 0.2rem; }
+
+/* ===== Featured card + filter counts ===== */
+.featured { margin-bottom: 1rem; }
+.post-card--featured {
+  background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+  border-radius: 10px; padding: 1.25rem;
+}
+.post-card--featured:last-child { border-bottom: 1px solid var(--rule); }
+.card-kicker { font-family: var(--sans); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #a07f00; }
+.filter-btn .count { opacity: 0.6; margin-left: 0.2rem; font-variant-numeric: tabular-nums; }
+.empty-state { color: var(--text-soft); font-style: italic; }
+.post-card[hidden], .featured[hidden] { display: none; }
+
+/* ===== Archive ===== */
+.archive-sub { color: var(--text-soft); font-style: italic; margin-top: -0.5rem; }
+.archive-year h2 { font-family: var(--sans); font-size: 0.85rem; letter-spacing: 0.08em; color: var(--text-soft); border-bottom: 1px solid var(--rule); padding-bottom: 0.3rem; margin-top: 2rem; }
+.archive-list { list-style: none; padding: 0; margin: 0; }
+.archive-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 0.9rem; padding: 0.55rem 0; border-bottom: 1px dashed var(--rule); }
+.archive-list time { font-family: var(--sans); font-size: 0.8rem; color: var(--text-soft); min-width: 3.5rem; font-variant-numeric: tabular-nums; }
+.archive-list a { color: var(--text); border: none; font-weight: 500; }
+.archive-list a:hover { color: var(--link); }
+.archive-list .tag-list { margin: 0; }
+.search-summary { margin: 0.2rem 0 0; font-size: 0.92rem; color: var(--text-soft); }
+
 /* ===== Responsive ===== */
 @media (max-width: 720px) {
   .hero h1 { font-size: 1.9rem; }
@@ -212,4 +259,7 @@ pre code { background: none; padding: 0; }
   .post-title { font-size: 1.8rem; }
   .header-inner { flex-direction: column; align-items: flex-start; }
   .site-nav a { margin-left: 0; margin-right: 1.2rem; }
+  .post-wrap { padding: 2rem 1rem; }
+  .post-nav { grid-template-columns: 1fr; }
+  .post-nav-link.next { grid-column: 1; }
 }
